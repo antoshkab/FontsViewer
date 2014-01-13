@@ -40,8 +40,8 @@ namespace FontsViewer
                 btn.MouseLeave += btn_MouseLeave;
             }
 
-            _btnNegative.Click += (sender, args) => _btnNegative_Click();
-            _btnPositive.Click += (sender, args) => _btnPositive_Click();
+            _btnNegative.Click += (sender, args) => { _btnNegative_Click(); InitImageLists(); };
+            _btnPositive.Click += (sender, args) => { _btnPositive_Click(); InitImageLists(); };
             _btnToLower.Click += (sender, args) => _btnToLower_Click();
             _btnInput.Click += (sender, args) => _btnInput_Click();
             _btnToUpper.Click += (sender, args) => _btnToUpper_Click();
