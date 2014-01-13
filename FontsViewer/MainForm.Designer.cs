@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this._fontsView = new System.Windows.Forms.ListView();
             this._btnLoadMore = new System.Windows.Forms.Button();
             this._topPanel = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this._btnBigger = new System.Windows.Forms.Button();
-            this._btsSmaller = new System.Windows.Forms.Button();
+            this._btnSmaller = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this._fontSize = new System.Windows.Forms.TextBox();
             this._tbString = new System.Windows.Forms.TextBox();
@@ -47,23 +47,13 @@
             this._btnToLower = new System.Windows.Forms.Button();
             this._btnToUpper = new System.Windows.Forms.Button();
             this._bottomPanel = new System.Windows.Forms.Panel();
+            this._fontsView = new System.Windows.Forms.ListView();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this._topPanel.SuspendLayout();
             this._bottomPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // _fontsView
-            // 
-            this._fontsView.BackColor = System.Drawing.SystemColors.ControlLight;
-            this._fontsView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._fontsView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._fontsView.Location = new System.Drawing.Point(0, 39);
-            this._fontsView.MultiSelect = false;
-            this._fontsView.Name = "_fontsView";
-            this._fontsView.Size = new System.Drawing.Size(546, 279);
-            this._fontsView.TabIndex = 0;
-            this._fontsView.UseCompatibleStateImageBehavior = false;
-            // 
-            // _bntLoadMore
+            // _btnLoadMore
             // 
             this._btnLoadMore.Anchor = System.Windows.Forms.AnchorStyles.None;
             this._btnLoadMore.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -74,10 +64,10 @@
             this._btnLoadMore.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._btnLoadMore.ForeColor = System.Drawing.Color.Silver;
             this._btnLoadMore.Location = new System.Drawing.Point(216, 6);
-            this._btnLoadMore.Name = "_bntLoadMore";
+            this._btnLoadMore.Name = "_btnLoadMore";
             this._btnLoadMore.Size = new System.Drawing.Size(116, 29);
             this._btnLoadMore.TabIndex = 1;
-            this._btnLoadMore.Text = "load more fonts";
+            this._btnLoadMore.Text = "load fonts";
             this._btnLoadMore.UseVisualStyleBackColor = false;
             // 
             // _topPanel
@@ -86,7 +76,7 @@
             this._topPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._topPanel.Controls.Add(this.label6);
             this._topPanel.Controls.Add(this._btnBigger);
-            this._topPanel.Controls.Add(this._btsSmaller);
+            this._topPanel.Controls.Add(this._btnSmaller);
             this._topPanel.Controls.Add(this.label4);
             this._topPanel.Controls.Add(this._fontSize);
             this._topPanel.Controls.Add(this._tbString);
@@ -106,7 +96,7 @@
             // 
             // label6
             // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label6.ForeColor = System.Drawing.Color.Silver;
             this.label6.Location = new System.Drawing.Point(475, 8);
@@ -117,7 +107,7 @@
             // 
             // _btnBigger
             // 
-            this._btnBigger.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this._btnBigger.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this._btnBigger.BackColor = System.Drawing.Color.Transparent;
             this._btnBigger.FlatAppearance.BorderSize = 0;
             this._btnBigger.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -132,26 +122,26 @@
             this._btnBigger.Text = "bigger";
             this._btnBigger.UseVisualStyleBackColor = false;
             // 
-            // _btsSmaller
+            // _btnSmaller
             // 
-            this._btsSmaller.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this._btsSmaller.BackColor = System.Drawing.Color.Transparent;
-            this._btsSmaller.FlatAppearance.BorderSize = 0;
-            this._btsSmaller.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this._btsSmaller.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this._btsSmaller.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this._btsSmaller.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._btsSmaller.ForeColor = System.Drawing.Color.Silver;
-            this._btsSmaller.Location = new System.Drawing.Point(428, 8);
-            this._btsSmaller.Name = "_btsSmaller";
-            this._btsSmaller.Size = new System.Drawing.Size(54, 23);
-            this._btsSmaller.TabIndex = 3;
-            this._btsSmaller.Text = "smaller";
-            this._btsSmaller.UseVisualStyleBackColor = false;
+            this._btnSmaller.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this._btnSmaller.BackColor = System.Drawing.Color.Transparent;
+            this._btnSmaller.FlatAppearance.BorderSize = 0;
+            this._btnSmaller.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this._btnSmaller.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this._btnSmaller.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this._btnSmaller.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this._btnSmaller.ForeColor = System.Drawing.Color.Silver;
+            this._btnSmaller.Location = new System.Drawing.Point(428, 8);
+            this._btnSmaller.Name = "_btnSmaller";
+            this._btnSmaller.Size = new System.Drawing.Size(54, 23);
+            this._btnSmaller.TabIndex = 3;
+            this._btnSmaller.Text = "smaller";
+            this._btnSmaller.UseVisualStyleBackColor = false;
             // 
             // label4
             // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label4.ForeColor = System.Drawing.Color.Silver;
             this.label4.Location = new System.Drawing.Point(337, 8);
@@ -161,23 +151,23 @@
             this.label4.Text = "font size:";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox2
+            // _fontSize
             // 
-            this._fontSize.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this._fontSize.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this._fontSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this._fontSize.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this._fontSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._fontSize.ForeColor = System.Drawing.Color.Silver;
             this._fontSize.Location = new System.Drawing.Point(398, 13);
-            this._fontSize.Name = "textBox2";
+            this._fontSize.MaxLength = 3;
+            this._fontSize.Name = "_fontSize";
             this._fontSize.Size = new System.Drawing.Size(24, 13);
             this._fontSize.TabIndex = 7;
             this._fontSize.Text = "19";
-            this._fontSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // _tbString
             // 
-            this._tbString.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this._tbString.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this._tbString.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this._tbString.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._tbString.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -189,7 +179,7 @@
             // 
             // label3
             // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.ForeColor = System.Drawing.Color.Silver;
             this.label3.Location = new System.Drawing.Point(177, 8);
@@ -200,7 +190,7 @@
             // 
             // label2
             // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.ForeColor = System.Drawing.Color.Silver;
             this.label2.Location = new System.Drawing.Point(151, 8);
@@ -211,7 +201,7 @@
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.ForeColor = System.Drawing.Color.Silver;
             this.label1.Location = new System.Drawing.Point(59, 8);
@@ -222,7 +212,7 @@
             // 
             // _btnPositive
             // 
-            this._btnPositive.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this._btnPositive.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this._btnPositive.BackColor = System.Drawing.Color.Transparent;
             this._btnPositive.FlatAppearance.BorderSize = 0;
             this._btnPositive.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
@@ -237,12 +227,11 @@
             this._btnPositive.Size = new System.Drawing.Size(60, 23);
             this._btnPositive.TabIndex = 3;
             this._btnPositive.Text = "positive";
-            this._btnPositive.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this._btnPositive.UseVisualStyleBackColor = false;
             // 
             // _btnInput
             // 
-            this._btnInput.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this._btnInput.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this._btnInput.BackColor = System.Drawing.Color.Transparent;
             this._btnInput.FlatAppearance.BorderSize = 0;
             this._btnInput.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
@@ -257,12 +246,11 @@
             this._btnInput.Size = new System.Drawing.Size(32, 23);
             this._btnInput.TabIndex = 5;
             this._btnInput.Text = "Aa";
-            this._btnInput.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this._btnInput.UseVisualStyleBackColor = false;
             // 
             // _btnNegative
             // 
-            this._btnNegative.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this._btnNegative.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this._btnNegative.BackColor = System.Drawing.Color.Transparent;
             this._btnNegative.FlatAppearance.BorderSize = 0;
             this._btnNegative.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
@@ -277,12 +265,11 @@
             this._btnNegative.Size = new System.Drawing.Size(66, 23);
             this._btnNegative.TabIndex = 5;
             this._btnNegative.Text = "negative";
-            this._btnNegative.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this._btnNegative.UseVisualStyleBackColor = false;
             // 
             // _btnToLower
             // 
-            this._btnToLower.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this._btnToLower.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this._btnToLower.BackColor = System.Drawing.Color.Transparent;
             this._btnToLower.FlatAppearance.BorderSize = 0;
             this._btnToLower.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
@@ -297,12 +284,11 @@
             this._btnToLower.Size = new System.Drawing.Size(29, 23);
             this._btnToLower.TabIndex = 4;
             this._btnToLower.Text = "aa";
-            this._btnToLower.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this._btnToLower.UseVisualStyleBackColor = false;
             // 
             // _btnToUpper
             // 
-            this._btnToUpper.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this._btnToUpper.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this._btnToUpper.BackColor = System.Drawing.Color.Transparent;
             this._btnToUpper.FlatAppearance.BorderSize = 0;
             this._btnToUpper.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
@@ -317,24 +303,45 @@
             this._btnToUpper.Size = new System.Drawing.Size(31, 23);
             this._btnToUpper.TabIndex = 6;
             this._btnToUpper.Text = "AA";
-            this._btnToUpper.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this._btnToUpper.UseVisualStyleBackColor = false;
             // 
             // _bottomPanel
             // 
             this._bottomPanel.Controls.Add(this._btnLoadMore);
             this._bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this._bottomPanel.Location = new System.Drawing.Point(0, 318);
+            this._bottomPanel.Location = new System.Drawing.Point(0, 321);
             this._bottomPanel.Name = "_bottomPanel";
             this._bottomPanel.Size = new System.Drawing.Size(546, 43);
             this._bottomPanel.TabIndex = 10;
+            // 
+            // _fontsView
+            // 
+            this._fontsView.BackColor = System.Drawing.Color.WhiteSmoke;
+            this._fontsView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._fontsView.LargeImageList = this.imageList1;
+            this._fontsView.Location = new System.Drawing.Point(0, 39);
+            this._fontsView.MultiSelect = false;
+            this._fontsView.Name = "_fontsView";
+            this._fontsView.Size = new System.Drawing.Size(546, 282);
+            this._fontsView.SmallImageList = this.imageList1;
+            this._fontsView.TabIndex = 11;
+            this._fontsView.UseCompatibleStateImageBehavior = false;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "43.png");
+            this.imageList1.Images.SetKeyName(1, "276.png");
+            this.imageList1.Images.SetKeyName(2, "277.png");
+            this.imageList1.Images.SetKeyName(3, "278.png");
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(546, 361);
+            this.ClientSize = new System.Drawing.Size(546, 364);
             this.Controls.Add(this._fontsView);
             this.Controls.Add(this._bottomPanel);
             this.Controls.Add(this._topPanel);
@@ -351,14 +358,13 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView _fontsView;
         private System.Windows.Forms.Button _btnLoadMore;
         private System.Windows.Forms.Panel _topPanel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox _tbString;
         private System.Windows.Forms.Button _btnPositive;
         private System.Windows.Forms.Button _btnNegative;
-        private System.Windows.Forms.Button _btsSmaller;
+        private System.Windows.Forms.Button _btnSmaller;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox _fontSize;
         private System.Windows.Forms.Label label3;
@@ -369,6 +375,8 @@
         private System.Windows.Forms.Button _btnBigger;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel _bottomPanel;
+        private System.Windows.Forms.ListView _fontsView;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
 
