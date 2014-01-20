@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this._btnLoadMore = new System.Windows.Forms.Button();
             this._topPanel = new System.Windows.Forms.Panel();
@@ -47,8 +46,7 @@
             this._btnToLower = new System.Windows.Forms.Button();
             this._btnToUpper = new System.Windows.Forms.Button();
             this._bottomPanel = new System.Windows.Forms.Panel();
-            this._fontsView = new System.Windows.Forms.ListView();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this._fontsView = new FontsViewer.FontsControl();
             this._topPanel.SuspendLayout();
             this._bottomPanel.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +61,7 @@
             this._btnLoadMore.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this._btnLoadMore.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._btnLoadMore.ForeColor = System.Drawing.Color.Silver;
-            this._btnLoadMore.Location = new System.Drawing.Point(216, 6);
+            this._btnLoadMore.Location = new System.Drawing.Point(224, 6);
             this._btnLoadMore.Name = "_btnLoadMore";
             this._btnLoadMore.Size = new System.Drawing.Size(116, 29);
             this._btnLoadMore.TabIndex = 1;
@@ -91,7 +89,7 @@
             this._topPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this._topPanel.Location = new System.Drawing.Point(0, 0);
             this._topPanel.Name = "_topPanel";
-            this._topPanel.Size = new System.Drawing.Size(546, 39);
+            this._topPanel.Size = new System.Drawing.Size(562, 39);
             this._topPanel.TabIndex = 2;
             // 
             // label6
@@ -99,7 +97,7 @@
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label6.ForeColor = System.Drawing.Color.Silver;
-            this.label6.Location = new System.Drawing.Point(475, 8);
+            this.label6.Location = new System.Drawing.Point(491, 8);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(10, 21);
             this.label6.TabIndex = 9;
@@ -115,7 +113,7 @@
             this._btnBigger.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this._btnBigger.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._btnBigger.ForeColor = System.Drawing.Color.Silver;
-            this._btnBigger.Location = new System.Drawing.Point(482, 8);
+            this._btnBigger.Location = new System.Drawing.Point(498, 8);
             this._btnBigger.Name = "_btnBigger";
             this._btnBigger.Size = new System.Drawing.Size(50, 23);
             this._btnBigger.TabIndex = 4;
@@ -132,7 +130,7 @@
             this._btnSmaller.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this._btnSmaller.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._btnSmaller.ForeColor = System.Drawing.Color.Silver;
-            this._btnSmaller.Location = new System.Drawing.Point(428, 8);
+            this._btnSmaller.Location = new System.Drawing.Point(444, 8);
             this._btnSmaller.Name = "_btnSmaller";
             this._btnSmaller.Size = new System.Drawing.Size(54, 23);
             this._btnSmaller.TabIndex = 3;
@@ -144,7 +142,7 @@
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label4.ForeColor = System.Drawing.Color.Silver;
-            this.label4.Location = new System.Drawing.Point(337, 8);
+            this.label4.Location = new System.Drawing.Point(353, 8);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(61, 21);
             this.label4.TabIndex = 8;
@@ -158,7 +156,7 @@
             this._fontSize.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this._fontSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._fontSize.ForeColor = System.Drawing.Color.Silver;
-            this._fontSize.Location = new System.Drawing.Point(398, 13);
+            this._fontSize.Location = new System.Drawing.Point(414, 13);
             this._fontSize.MaxLength = 3;
             this._fontSize.Name = "_fontSize";
             this._fontSize.Size = new System.Drawing.Size(24, 13);
@@ -173,7 +171,7 @@
             this._tbString.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._tbString.Location = new System.Drawing.Point(215, 3);
             this._tbString.Name = "_tbString";
-            this._tbString.Size = new System.Drawing.Size(116, 29);
+            this._tbString.Size = new System.Drawing.Size(132, 29);
             this._tbString.TabIndex = 0;
             this._tbString.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -309,44 +307,30 @@
             // 
             this._bottomPanel.Controls.Add(this._btnLoadMore);
             this._bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this._bottomPanel.Location = new System.Drawing.Point(0, 321);
+            this._bottomPanel.Location = new System.Drawing.Point(0, 435);
             this._bottomPanel.Name = "_bottomPanel";
-            this._bottomPanel.Size = new System.Drawing.Size(546, 43);
+            this._bottomPanel.Size = new System.Drawing.Size(562, 43);
             this._bottomPanel.TabIndex = 10;
             // 
             // _fontsView
             // 
-            this._fontsView.BackColor = System.Drawing.Color.WhiteSmoke;
+            this._fontsView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this._fontsView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._fontsView.LargeImageList = this.imageList1;
             this._fontsView.Location = new System.Drawing.Point(0, 39);
-            this._fontsView.MultiSelect = false;
             this._fontsView.Name = "_fontsView";
-            this._fontsView.Size = new System.Drawing.Size(546, 282);
-            this._fontsView.SmallImageList = this.imageList1;
+            this._fontsView.Size = new System.Drawing.Size(562, 396);
             this._fontsView.TabIndex = 11;
-            this._fontsView.UseCompatibleStateImageBehavior = false;
-            // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "43.png");
-            this.imageList1.Images.SetKeyName(1, "276.png");
-            this.imageList1.Images.SetKeyName(2, "277.png");
-            this.imageList1.Images.SetKeyName(3, "278.png");
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(546, 364);
+            this.ClientSize = new System.Drawing.Size(562, 478);
             this.Controls.Add(this._fontsView);
             this.Controls.Add(this._bottomPanel);
             this.Controls.Add(this._topPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(562, 399);
             this.Name = "MainForm";
             this.Text = "Просмотр шрифтов";
             this._topPanel.ResumeLayout(false);
@@ -375,8 +359,7 @@
         private System.Windows.Forms.Button _btnBigger;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel _bottomPanel;
-        private System.Windows.Forms.ListView _fontsView;
-        private System.Windows.Forms.ImageList imageList1;
+        private FontsControl _fontsView;
     }
 }
 

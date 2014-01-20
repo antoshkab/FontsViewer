@@ -1,28 +1,25 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FontsViewer
 {
-    internal enum FontColorStyle
-    {
-        Positive,
-        Negative
-    }
-
     public partial class MainForm : Form
     {
         private readonly FontFamily[] _fontCollection = new InstalledFontCollection().Families;
-        // ReSharper disable FieldCanBeMadeReadOnly.Local
-        private ImageList _imageList = new ImageList();
-        // ReSharper restore FieldCanBeMadeReadOnly.Local
         private Font _font;
-        private FontColorStyle _fontColorStyle;
+        private bool _isPositive;
+        private readonly BackgroundWorker _bgWorker = new BackgroundWorker();
+        private readonly WaitScreen _waitScreen = new WaitScreen();
+
+        private delegate void InitListViewDelegate();
+
+        private InitListViewDelegate _initListView;
 
         #region Конструктор
 
@@ -30,7 +27,7 @@ namespace FontsViewer
         {
             InitializeComponent();
 
-            _fontSize.Text = 32.ToString();
+            _fontSize.Text = 24.ToString();
 
             #region Привязка событий
 
@@ -40,60 +37,74 @@ namespace FontsViewer
                 btn.MouseLeave += btn_MouseLeave;
             }
 
-            _btnNegative.Click += (sender, args) => { _btnNegative_Click(); InitImageLists(); };
-            _btnPositive.Click += (sender, args) => { _btnPositive_Click(); InitImageLists(); };
+            _btnNegative.Click += (sender, args) => _btnNegative_Click();
+            _btnPositive.Click += (sender, args) => _btnPositive_Click();
             _btnToLower.Click += (sender, args) => _btnToLower_Click();
             _btnInput.Click += (sender, args) => _btnInput_Click();
             _btnToUpper.Click += (sender, args) => _btnToUpper_Click();
 
-            _btnLoadMore.Click += (sender, args) =>
-                                      {
-                                          InitImageLists();
-                                          InitListView();
-                                      };
+            _btnLoadMore.Click += (sender, args) => LoadFont();
 
             #endregion
 
-            _btnPositive.PerformClick();
+            _btnPositive.MouseEnter -= btn_MouseEnter;
+            _btnPositive.MouseLeave -= btn_MouseLeave;
             _btnPositive.ForeColor = Color.White;
             _tbString.ForeColor = Color.White;
             _tbString.Text = @"Fonts viewer";
+            _isPositive = true;
             _btnPositive.Focus();
-            _tbString.TextChanged += (sender, args) => InitImageLists();
-            _fontSize.TextChanged += (sender, args) => InitImageLists();
+            _tbString.Validating += (sender, args) =>
+                                        {
+                                            if (string.IsNullOrEmpty(_tbString.Text))
+                                                _tbString.Text = @"Fonts viewer";
+                                            else
+                                                LoadFont();
+                                        };
+            _fontSize.Validating += (sender, args) =>
+                                        {
+                                            if (Convert.ToInt32(_fontSize.Text) < 3)
+                                            {
+                                                _fontSize.Text = @"24";
+                                                return;
+                                            }
+                                            LoadFont();
+                                        };
             _btnSmaller.Click += (sender, args) =>
                                      {
                                          int newSize = Convert.ToInt32(_fontSize.Text) - 4;
-                                         if (newSize < 4)
-                                             _fontSize.Text = @"32";
-                                         else
-                                             _fontSize.Text = newSize.ToString();
+                                         _fontSize.Text = newSize < 4 ? @"24" : newSize.ToString();
+                                         LoadFont();
                                      };
             _btnBigger.Click += (sender, args) =>
                                     {
                                         int newSize = Convert.ToInt32(_fontSize.Text) + 4;
-                                        if (newSize > (256 - 10))
-                                            return;
                                         _fontSize.Text = newSize.ToString();
+                                        LoadFont();
                                     };
+
+            _bgWorker.DoWork += (sender, args) => InitImageLists();
+            _bgWorker.RunWorkerCompleted += (sender, args) => _waitScreen.Close();
         }
 
         #endregion
 
         #region Методы
 
-        private bool InitImageLists()
+        private void LoadFont()
+        {
+            _fontsView.Clear();
+            _bgWorker.RunWorkerAsync();
+            _waitScreen.ShowDialog(this);
+        }
+
+
+        private void InitImageLists()
         {
             _font = new Font("Arial", Convert.ToInt32(_fontSize.Text), FontStyle.Bold, GraphicsUnit.Pixel);
-            int w = (int)Graphics.FromImage(new Bitmap(1, 1)).MeasureString(_tbString.Text, _font).Width + 10;
-            if (w > 256)
-                return false;
-            int h = (int)Graphics.FromImage(new Bitmap(1, 1)).MeasureString(_tbString.Text, _font).Height + 10;
-            if (h > 256)
-                return false;
-            _imageList.ImageSize = new Size(w, h);
-
-            foreach (var family in _fontCollection.OrderBy(f => f.Name))
+            int w = (int)Graphics.FromImage(new Bitmap(1, 1)).MeasureString(_tbString.Text, _font).Width;
+            int h = (int)Graphics.FromImage(new Bitmap(1, 1)).MeasureString(_tbString.Text, _font).Height;
+            foreach (var family in _fontCollection)
             {
                 if (family.IsStyleAvailable(FontStyle.Regular))
                     _font = new Font(family, Convert.ToInt32(_fontSize.Text), FontStyle.Regular, GraphicsUnit.Pixel);
@@ -101,19 +112,8 @@ namespace FontsViewer
                     _font = new Font(family, Convert.ToInt32(_fontSize.Text), FontStyle.Bold, GraphicsUnit.Pixel);
                 if (family.IsStyleAvailable(FontStyle.Italic))
                     _font = new Font(family, Convert.ToInt32(_fontSize.Text), FontStyle.Italic, GraphicsUnit.Pixel);
-                int width = (int)Graphics.FromImage(new Bitmap(1, 1)).MeasureString(_tbString.Text, _font).Width;
-                int height = (int)Graphics.FromImage(new Bitmap(1, 1)).MeasureString(_tbString.Text, _font).Height;
-                _imageList.Images.Add(family.Name, CreateImage(ref width, ref height));
+                _fontsView.Items.Add(family.Name, CreateImage(ref w, ref h));
             }
-            return true;
-        }
-
-
-        private void InitListView()
-        {
-            _fontsView.LargeImageList = _imageList;
-            foreach (var family in _fontCollection.OrderBy(f => f.Name))
-                _fontsView.Items.Add(new ListViewItem(family.Name, family.Name));
         }
 
 
@@ -121,10 +121,19 @@ namespace FontsViewer
         {
             Bitmap bitmap = new Bitmap(width, height);
             Graphics graphics = Graphics.FromImage(bitmap);
-            graphics.Clear(_fontColorStyle == FontColorStyle.Positive ? Color.White : Color.Black);
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-            graphics.DrawString(_tbString.Text, _font, new SolidBrush(_fontColorStyle == FontColorStyle.Positive ? Color.Black : Color.White), 0, 0);
+            graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+
+            if (_isPositive)
+            {
+                graphics.Clear(Color.White);
+                graphics.DrawString(_tbString.Text, _font, Brushes.Black, 0, 0);
+            }
+            else
+            {
+                graphics.Clear(Color.Black);
+                graphics.DrawString(_tbString.Text, _font, Brushes.White, 0, 0);
+            }
             graphics.Flush();
 
             return bitmap;
@@ -136,9 +145,14 @@ namespace FontsViewer
 
         private void _btnToLower_Click()
         {
-            _tbString.Text = _tbString.Text.Trim().ToLower();
-            _btnToLower.MouseEnter -= btn_MouseEnter;
-            _btnToLower.MouseLeave -= btn_MouseLeave;
+            if (!string.IsNullOrEmpty(_tbString.Text))
+            {
+                _tbString.Text = _tbString.Text.Trim().ToLower();
+                _btnToLower.MouseEnter -= btn_MouseEnter;
+                _btnToLower.MouseLeave -= btn_MouseLeave;
+            }
+            else
+                return;
 
             if (_btnInput.ForeColor == Color.White)
             {
@@ -152,6 +166,7 @@ namespace FontsViewer
                 _btnToUpper.MouseLeave += btn_MouseLeave;
                 _btnToUpper.ForeColor = Color.Silver;
             }
+            LoadFont();
         }
 
 
@@ -162,6 +177,9 @@ namespace FontsViewer
                 char ch = Char.ToUpper(_tbString.Text.Trim()[0]);
                 _tbString.Text = ch + _tbString.Text.Trim().Remove(0, 1).ToLower();
             }
+            else
+                return;
+
             _btnInput.MouseEnter -= btn_MouseEnter;
             _btnInput.MouseLeave -= btn_MouseLeave;
 
@@ -177,14 +195,20 @@ namespace FontsViewer
                 _btnToUpper.MouseLeave += btn_MouseLeave;
                 _btnToUpper.ForeColor = Color.Silver;
             }
+            LoadFont();
         }
 
 
         private void _btnToUpper_Click()
         {
-            _tbString.Text = _tbString.Text.Trim().ToUpper();
-            _btnToUpper.MouseEnter -= btn_MouseEnter;
-            _btnToUpper.MouseLeave -= btn_MouseLeave;
+            if (!string.IsNullOrEmpty(_tbString.Text))
+            {
+                _tbString.Text = _tbString.Text.Trim().ToUpper();
+                _btnToUpper.MouseEnter -= btn_MouseEnter;
+                _btnToUpper.MouseLeave -= btn_MouseLeave;
+            }
+            else
+                return;
 
             if (_btnInput.ForeColor == Color.White)
             {
@@ -198,12 +222,13 @@ namespace FontsViewer
                 _btnInput.MouseLeave += btn_MouseLeave;
                 _btnInput.ForeColor = Color.Silver;
             }
+            LoadFont();
         }
 
 
         private void _btnPositive_Click()
         {
-            _fontColorStyle = FontColorStyle.Positive;
+            _isPositive = true;
             _btnPositive.MouseEnter -= btn_MouseEnter;
             _btnPositive.MouseLeave -= btn_MouseLeave;
 
@@ -213,12 +238,13 @@ namespace FontsViewer
                 _btnNegative.MouseLeave += btn_MouseLeave;
                 _btnNegative.ForeColor = Color.Silver;
             }
+            LoadFont();
         }
 
 
         private void _btnNegative_Click()
         {
-            _fontColorStyle = FontColorStyle.Negative;
+            _isPositive = false;
             _btnNegative.MouseEnter -= btn_MouseEnter;
             _btnNegative.MouseLeave -= btn_MouseLeave;
 
@@ -228,6 +254,7 @@ namespace FontsViewer
                 _btnPositive.MouseLeave += btn_MouseLeave;
                 _btnPositive.ForeColor = Color.Silver;
             }
+            LoadFont();
         }
 
 
