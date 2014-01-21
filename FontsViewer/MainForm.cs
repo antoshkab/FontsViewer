@@ -17,9 +17,9 @@ namespace FontsViewer
         private readonly BackgroundWorker _bgWorker = new BackgroundWorker();
         private readonly WaitScreen _waitScreen = new WaitScreen();
 
-        private delegate void InitListViewDelegate();
+        private delegate void AddImageDelegate(Picture picture);
 
-        private InitListViewDelegate _initListView;
+        private AddImageDelegate _addImage;
 
         #region Конструктор
 
@@ -30,6 +30,8 @@ namespace FontsViewer
             _fontSize.Text = 24.ToString();
 
             #region Привязка событий
+
+            _addImage += AddPicture;
 
             foreach (Button btn in _topPanel.Controls.OfType<Button>())
             {
@@ -99,20 +101,25 @@ namespace FontsViewer
         }
 
 
+        private void AddPicture(Picture picture)
+        {
+            _fontsView.Add(picture);
+        }
+
+
         private void InitImageLists()
         {
-            _font = new Font("Arial", Convert.ToInt32(_fontSize.Text), FontStyle.Bold, GraphicsUnit.Pixel);
-            int w = (int)Graphics.FromImage(new Bitmap(1, 1)).MeasureString(_tbString.Text, _font).Width;
-            int h = (int)Graphics.FromImage(new Bitmap(1, 1)).MeasureString(_tbString.Text, _font).Height;
             foreach (var family in _fontCollection)
             {
                 if (family.IsStyleAvailable(FontStyle.Regular))
                     _font = new Font(family, Convert.ToInt32(_fontSize.Text), FontStyle.Regular, GraphicsUnit.Pixel);
-                if (family.IsStyleAvailable(FontStyle.Bold))
+                else if (family.IsStyleAvailable(FontStyle.Bold))
                     _font = new Font(family, Convert.ToInt32(_fontSize.Text), FontStyle.Bold, GraphicsUnit.Pixel);
-                if (family.IsStyleAvailable(FontStyle.Italic))
+                else if (family.IsStyleAvailable(FontStyle.Italic))
                     _font = new Font(family, Convert.ToInt32(_fontSize.Text), FontStyle.Italic, GraphicsUnit.Pixel);
-                _fontsView.Items.Add(family.Name, CreateImage(ref w, ref h));
+                int w = (int)Graphics.FromImage(new Bitmap(1, 1)).MeasureString(_tbString.Text, _font).Width;
+                int h = (int)Graphics.FromImage(new Bitmap(1, 1)).MeasureString(_tbString.Text, _font).Height;
+                _fontsView.Invoke(_addImage, new Picture(CreateImage(ref w, ref h), family.Name));
             }
         }
 

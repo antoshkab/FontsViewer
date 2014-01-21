@@ -315,6 +315,7 @@
             // _fontsView
             // 
             this._fontsView.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this._fontsView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._fontsView.Dock = System.Windows.Forms.DockStyle.Fill;
             this._fontsView.Location = new System.Drawing.Point(0, 39);
             this._fontsView.Name = "_fontsView";

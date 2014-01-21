@@ -37,7 +37,6 @@
             this._flpControl.AutoSize = true;
             this._flpControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this._flpControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._flpControl.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this._flpControl.Location = new System.Drawing.Point(0, 0);
             this._flpControl.Name = "_flpControl";
             this._flpControl.Size = new System.Drawing.Size(217, 108);

@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace FontsViewer
 {
     public partial class Picture : UserControl
     {
-        public Image Image
+        public Bitmap Image
         {
-            get { return _image.Image; }
+            get { return new Bitmap(_image.Image); }
             set { _image.Image = value; }
         }
 
@@ -23,14 +17,9 @@ namespace FontsViewer
             set { _fontName.Text = value; }
         }
 
-        public Picture()
+        public Picture(Bitmap image, string fontName)
         {
             InitializeComponent();
-        }
-
-
-        public Picture(Image image, string fontName)
-        {
             Image = image;
             FontName = fontName;
         }
