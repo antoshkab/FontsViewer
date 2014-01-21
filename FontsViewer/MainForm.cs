@@ -19,7 +19,7 @@ namespace FontsViewer
 
         private delegate void AddImageDelegate(Picture picture);
 
-        private AddImageDelegate _addImage;
+        private readonly AddImageDelegate _addImage;
 
         #region Конструктор
 
@@ -270,9 +270,7 @@ namespace FontsViewer
             if (!(sender is Button))
                 return;
             Button btn = sender as Button;
-            // ReSharper disable RedundantCheckBeforeAssignment
             if (btn.ForeColor == Color.White)
-                    // ReSharper restore RedundantCheckBeforeAssignment
                 return;
             btn.ForeColor = Color.White;
         }
@@ -283,9 +281,7 @@ namespace FontsViewer
             if (!(sender is Button))
                 return;
             Button btn = sender as Button;
-            // ReSharper disable RedundantCheckBeforeAssignment
             if (btn.ForeColor == Color.Silver)
-                    // ReSharper restore RedundantCheckBeforeAssignment
                 return;
             btn.ForeColor = Color.Silver;
         }
